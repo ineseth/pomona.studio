@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomona Studio — Boutique</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --terracotta: #C9502A;
+  --terracotta-light: #E8784E;
+  --terracotta-deep: #8B3318;
+  --safran: #E8A030;
+  --ivoire: #FAF5EE;
+  --ivoire-warm: #F2EAD8;
+  --sable: #D9C8A9;
+  --cendre: #4A3F35;
+  --noir-chaud: #1C1410;
+  --blanc: #FFFFFF;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--ivoire);
+  color: var(--noir-chaud);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ─── NAVBAR ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: var(--ivoire);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+nav.scrolled {
+  border-bottom-color: var(--sable);
+  background: rgba(250,245,238,0.96);
+  backdrop-filter: blur(8px);
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 300;
+  letter-spacing: 8px;
+  color: var(--noir-chaud);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav-logo span {
+  color: var(--terracotta);
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--cendre);
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--terracotta); }
+
+.nav-cart {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--cendre);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+
+.nav-cart:hover { color: var(--terracotta); }
+
+.cart-count {
+  background: var(--terracotta);
+  color: white;
+  border-radius: 50%;
+  width: 18px; height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 500;
+  transition: transform 0.2s;
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  background: var(--noir-chaud);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 70% at 70% 50%, #C9502A15 0%, transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 64px 80px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-pretitle {
+  font-size: 9px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--terracotta-light);
+  margin-bottom: 32px;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(56px, 7vw, 100px);
+  font-weight: 300;
+  line-height: 0.95;
+  color: var(--ivoire);
+  margin-bottom: 32px;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--terracotta-light);
+}
+
+.hero-desc {
+  font-size: 14px;
+  color: var(--sable);
+  line-height: 1.9;
+  max-width: 380px;
+  margin-bottom: 48px;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--terracotta);
+  color: white;
+  padding: 16px 36px;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  transition: background 0.3s, transform 0.2s;
+  align-self: flex-start;
+}
+
+.hero-cta:hover {
+  background: var(--terracotta-deep);
+  transform: translateX(4px);
+}
+
+.hero-cta::after {
+  content: '→';
+  font-size: 14px;
+}
+
+.hero-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: brightness(0.88) saturate(1.1);
+  transition: transform 6s ease;
+}
+
+.hero:hover .hero-image img {
+  transform: scale(1.03);
+}
+
+.hero-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--noir-chaud) 0%, transparent 30%);
+}
+
+/* ─── BAND ─── */
+.marquee-band {
+  background: var(--terracotta);
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-inner {
+  display: inline-flex;
+  animation: marquee 20s linear infinite;
+  gap: 0;
+}
+
+.marquee-item {
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: white;
+  padding: 0 40px;
+  opacity: 0.9;
+}
+
+.marquee-dot {
+  color: rgba(255,255,255,0.4);
+  font-size: 6px;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ─── SECTION HEADER ─── */
+.section-header {
+  text-align: center;
+  padding: 80px 40px 40px;
+}
+
+.section-eyebrow {
+  font-size: 9px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 5vw, 68px);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--noir-chaud);
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--terracotta);
+}
+
+/* ─── PRODUCT GRID ─── */
+.shop-section {
+  padding: 20px 48px 100px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--sable);
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.filter-tab {
+  padding: 8px 20px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  color: var(--cendre);
+  transition: all 0.2s;
+  font-weight: 400;
+}
+
+.filter-tab.active, .filter-tab:hover {
+  border-color: var(--terracotta);
+  color: var(--terracotta);
+}
+
+.product-count {
+  font-size: 11px;
+  color: var(--sable);
+  letter-spacing: 2px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+/* ─── PRODUCT CARD ─── */
+.product-card {
+  background: var(--blanc);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.product-card:hover .product-img img {
+  transform: scale(1.06);
+}
+
+.product-card:hover .product-overlay {
+  opacity: 1;
+}
+
+.product-img {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  position: relative;
+  background: var(--ivoire-warm);
+}
+
+.product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+.product-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: var(--terracotta);
+  color: white;
+  font-size: 8px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  z-index: 2;
+  font-weight: 400;
+}
+
+.product-badge.new { background: var(--noir-chaud); }
+.product-badge.limited { background: var(--safran); color: var(--noir-chaud); }
+
+.product-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(28,20,16,0.85));
+  padding: 60px 24px 24px;
+  opacity: 0;
+  transition: opacity 0.4s;
+  z-index: 3;
+}
+
+.quick-add-btn {
+  width: 100%;
+  background: white;
+  color: var(--noir-chaud);
+  border: none;
+  padding: 14px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+.quick-add-btn:hover {
+  background: var(--terracotta);
+  color: white;
+}
+
+.product-info {
+  padding: 24px 24px 32px;
+}
+
+.product-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--noir-chaud);
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.product-subtitle {
+  font-size: 11px;
+  color: var(--sable);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.product-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--terracotta);
+  margin-bottom: 20px;
+}
+
+.product-price span {
+  font-size: 14px;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+}
+
+.color-swatches {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.swatch:hover, .swatch.active {
+  border-color: var(--noir-chaud);
+  transform: scale(1.15);
+}
+
+.size-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.size-btn {
+  padding: 6px 12px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  border: 1px solid var(--sable);
+  background: none;
+  color: var(--cendre);
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  transition: all 0.2s;
+}
+
+.size-btn:hover, .size-btn.active {
+  border-color: var(--terracotta);
+  background: var(--terracotta);
+  color: white;
+}
+
+/* ─── ADD TO CART BUTTON ─── */
+.add-to-cart {
+  width: 100%;
+  background: var(--noir-chaud);
+  color: var(--ivoire);
+  border: none;
+  padding: 16px 24px;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.3s, transform 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-to-cart::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--terracotta);
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+.add-to-cart:hover::before { transform: translateX(0); }
+.add-to-cart span { position: relative; z-index: 1; }
+.add-to-cart:active { transform: scale(0.98); }
+.add-to-cart.added { background: var(--terracotta-deep); }
+
+/* ─── PAYMENT METHODS ─── */
+.payment-methods {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.pay-icon {
+  background: var(--ivoire-warm);
+  border: 1px solid var(--sable);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 10px;
+  color: var(--cendre);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* ─── FEATURED PRODUCT (WIDE) ─── */
+.featured-section {
+  background: var(--noir-chaud);
+  padding: 0;
+  margin: 80px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 80vh;
+  overflow: hidden;
+}
+
+.featured-images {
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-img-main {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  filter: brightness(0.9);
+  transition: transform 8s ease;
+}
+
+.featured-section:hover .featured-img-main {
+  transform: scale(1.04);
+}
+
+.featured-img-inset {
+  position: absolute;
+  bottom: 40px;
+  right: -40px;
+  width: 180px;
+  height: 240px;
+  object-fit: cover;
+  object-position: top;
+  border: 4px solid var(--noir-chaud);
+  box-shadow: -8px 8px 40px rgba(0,0,0,0.4);
+}
+
+.featured-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 64px;
+  position: relative;
+}
+
+.featured-tag {
+  font-size: 9px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--terracotta-light);
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+.featured-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 5vw, 80px);
+  font-weight: 300;
+  line-height: 1.0;
+  color: var(--ivoire);
+  margin-bottom: 24px;
+}
+
+.featured-title em { color: var(--terracotta-light); font-style: italic; }
+
+.featured-desc {
+  font-size: 14px;
+  color: var(--sable);
+  line-height: 1.9;
+  margin-bottom: 40px;
+  max-width: 380px;
+}
+
+.featured-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.featured-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--ivoire);
+  line-height: 1;
+}
+
+.featured-price-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--sable);
+}
+
+.featured-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 360px;
+}
+
+.btn-primary {
+  background: var(--terracotta);
+  color: white;
+  border: none;
+  padding: 18px 36px;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: background 0.3s, transform 0.15s;
+}
+
+.btn-primary:hover { background: var(--terracotta-deep); transform: translateY(-2px); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--sable);
+  border: 1px solid #4A3F3570;
+  padding: 16px 36px;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.btn-secondary:hover { border-color: var(--sable); color: var(--ivoire); }
+
+/* ─── CART DRAWER ─── */
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(28,20,16,0.6);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(4px);
+}
+
+.cart-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 420px;
+  max-width: 100vw;
+  background: var(--ivoire);
+  z-index: 201;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cart-drawer.open { transform: translateX(0); }
+
+.cart-header {
+  padding: 32px 32px 24px;
+  border-bottom: 1px solid var(--sable);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--noir-chaud);
+}
+
+.cart-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--cendre);
+  padding: 4px 8px;
+  font-family: 'Jost', sans-serif;
+  transition: color 0.2s;
+}
+
+.cart-close:hover { color: var(--terracotta); }
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 32px;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: 16px;
+  align-items: start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--ivoire-warm);
+}
+
+.cart-item-img {
+  width: 72px;
+  height: 96px;
+  object-fit: cover;
+  object-position: top;
+  background: var(--ivoire-warm);
+}
+
+.cart-item-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--noir-chaud);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.cart-item-detail {
+  font-size: 11px;
+  color: var(--sable);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--sable);
+  width: fit-content;
+}
+
+.qty-btn {
+  width: 28px; height: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--cendre);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.qty-btn:hover { background: var(--terracotta); color: white; }
+
+.qty-value {
+  width: 32px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--noir-chaud);
+  border-left: 1px solid var(--sable);
+  border-right: 1px solid var(--sable);
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-item-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--terracotta);
+  white-space: nowrap;
+}
+
+.cart-remove {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--sable);
+  margin-top: 2px;
+  display: block;
+  transition: color 0.2s;
+}
+
+.cart-remove:hover { color: var(--terracotta); }
+
+.cart-empty {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.cart-empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+
+.cart-empty-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--cendre);
+}
+
+.cart-footer {
+  padding: 24px 32px 32px;
+  border-top: 1px solid var(--sable);
+  background: var(--ivoire);
+}
+
+.cart-subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.cart-subtotal-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--cendre);
+}
+
+.cart-subtotal-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--noir-chaud);
+}
+
+.cart-shipping-note {
+  font-size: 11px;
+  color: var(--sable);
+  margin-bottom: 24px;
+}
+
+.checkout-btn {
+  width: 100%;
+  background: var(--terracotta);
+  color: white;
+  border: none;
+  padding: 20px;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  transition: background 0.3s;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.checkout-btn:hover { background: var(--terracotta-deep); }
+
+.payment-icons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.pay-pill {
+  background: var(--ivoire-warm);
+  border: 1px solid var(--sable);
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--cendre);
+  letter-spacing: 0.5px;
+}
+
+/* ─── STRIPE MODAL ─── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(28,20,16,0.7);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(6px);
+  padding: 24px;
+}
+
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: var(--ivoire);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(20px);
+  transition: transform 0.3s;
+}
+
+.modal-overlay.open .modal { transform: translateY(0); }
+
+.modal-header {
+  background: var(--noir-chaud);
+  padding: 28px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 6px;
+  color: var(--ivoire);
+  text-transform: uppercase;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: var(--sable);
+  font-size: 22px;
+  cursor: pointer;
+  transition: color 0.2s;
+  font-family: 'Jost', sans-serif;
+}
+
+.modal-close-btn:hover { color: white; }
+
+.modal-body {
+  padding: 36px;
+}
+
+.modal-order-summary {
+  background: var(--ivoire-warm);
+  border: 1px solid var(--sable);
+  padding: 20px 24px;
+  margin-bottom: 28px;
+}
+
+.modal-order-title {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--cendre);
+  margin-bottom: 14px;
+  font-weight: 400;
+}
+
+.modal-order-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--noir-chaud);
+  padding: 4px 0;
+}
+
+.modal-order-total {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--terracotta);
+  border-top: 1px solid var(--sable);
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.form-section-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 16px;
+  margin-top: 28px;
+  font-weight: 400;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-row.full { grid-template-columns: 1fr; }
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cendre);
+  margin-bottom: 6px;
+  font-weight: 400;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--sable);
+  background: white;
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--noir-chaud);
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+
+.form-input:focus { border-color: var(--terracotta); }
+
+.card-field-mock {
+  background: white;
+  border: 1px solid var(--sable);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  transition: border-color 0.2s;
+}
+
+.card-field-mock:focus-within { border-color: var(--terracotta); }
+
+.card-field-mock input {
+  border: none;
+  outline: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--noir-chaud);
+  width: 100%;
+  background: transparent;
+}
+
+.card-icon {
+  font-size: 16px;
+  opacity: 0.5;
+}
+
+.payment-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.payment-tab {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid var(--sable);
+  background: none;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cendre);
+  transition: all 0.2s;
+  font-weight: 400;
+}
+
+.payment-tab.active {
+  border-color: var(--terracotta);
+  background: var(--terracotta);
+  color: white;
+}
+
+.paypal-btn {
+  width: 100%;
+  background: #FFC439;
+  border: none;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #003087;
+  font-family: 'Helvetica Neue', sans-serif;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.paypal-btn:hover { background: #f0b429; }
+
+.confirm-pay-btn {
+  width: 100%;
+  background: var(--terracotta);
+  color: white;
+  border: none;
+  padding: 18px;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  transition: background 0.3s;
+  margin-top: 8px;
+}
+
+.confirm-pay-btn:hover { background: var(--terracotta-deep); }
+
+.secure-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--sable);
+  margin-top: 14px;
+  letter-spacing: 1px;
+}
+
+/* ─── PROMISE BAR ─── */
+.promise-bar {
+  background: var(--ivoire-warm);
+  border-top: 1px solid var(--sable);
+  border-bottom: 1px solid var(--sable);
+  padding: 40px 60px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+
+.promise-item {
+  padding: 24px;
+  text-align: center;
+  border-right: 1px solid var(--sable);
+}
+
+.promise-item:last-child { border-right: none; }
+
+.promise-icon { font-size: 24px; margin-bottom: 12px; display: block; }
+
+.promise-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 400;
+  margin-bottom: 6px;
+}
+
+.promise-desc {
+  font-size: 11px;
+  color: var(--cendre);
+  letter-spacing: 1px;
+  line-height: 1.6;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--noir-chaud);
+  padding: 60px 60px 40px;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid #3A2F2630;
+}
+
+.footer-brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px;
+  font-weight: 300;
+  letter-spacing: 8px;
+  color: var(--ivoire);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.footer-brand-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--sable);
+  margin-bottom: 24px;
+}
+
+.footer-col-title {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--terracotta-light);
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--sable);
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: 300;
+}
+
+.footer-links a:hover { color: var(--terracotta-light); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: var(--cendre);
+  letter-spacing: 2px;
+}
+
+/* ─── TOAST ─── */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--noir-chaud);
+  color: var(--ivoire);
+  padding: 16px 32px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  z-index: 500;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ─── SUCCESS SCREEN ─── */
+.success-screen {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-icon { font-size: 48px; margin-bottom: 20px; display: block; }
+
+.success-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--noir-chaud);
+  margin-bottom: 12px;
+}
+
+.success-desc {
+  font-size: 13px;
+  color: var(--cendre);
+  line-height: 1.9;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-image { height: 50vh; }
+  .hero-text { padding: 100px 32px 60px; }
+  .product-grid { grid-template-columns: 1fr 1fr; }
+  .featured-section { grid-template-columns: 1fr; }
+  .featured-images { height: 50vh; }
+  .promise-bar { grid-template-columns: 1fr 1fr; gap: 0; }
+  .promise-item { border-right: none; border-bottom: 1px solid var(--sable); }
+  .shop-section { padding: 20px 24px 80px; }
+  .footer-top { grid-template-columns: 1fr; gap: 40px; }
+}
+
+@media (max-width: 600px) {
+  .product-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 56px; }
+  .cart-drawer { width: 100vw; }
+  .promise-bar { grid-template-columns: 1fr; padding: 24px; }
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-text > * {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.hero-pretitle { animation-delay: 0.2s; }
+.hero-title { animation-delay: 0.4s; }
+.hero-desc { animation-delay: 0.6s; }
+.hero-cta { animation-delay: 0.8s; }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Pomona<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#robes-longues">Robes Longues</a></li>
+    <li><a href="#robes-courtes">Robes Courtes</a></li>
+    <li><a href="#notre-histoire">Notre Histoire</a></li>
+  </ul>
+  <button class="nav-cart" onclick="toggleCart()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 01-8 0"/>
+    </svg>
+    Panier
+    <div class="cart-count" id="cartCount">0</div>
+  </button>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-pretitle">Née à Abidjan · Portée Partout</div>
+    <h1 class="hero-title">
+      L'élégance<br>
+      en <em>mouvement</em>
+    </h1>
+    <p class="hero-desc">
+      Des robes cousues à la main à Abidjan. Volant par volant, chaque pièce est une ode à la femme qui refuse de passer inaperçue.
+    </p>
+    <a href="#collection" class="hero-cta">Découvrir la collection</a>
+  </div>
+  <div class="hero-image">
+    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
+         id="heroImg"
+         alt="Robe Pomona Studio" 
+         style="background: linear-gradient(135deg, #C9502A22, #1C1410);" />
+    <div class="hero-image-overlay"></div>
+  </div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-band">
+  <div class="marquee-inner" id="marqueeInner">
+    <span class="marquee-item">Fabriqué à Abidjan</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">Livraison en 7–14 jours</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">Tailles S à XXL</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">Retours acceptés sous 14 jours</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">Paiement sécurisé</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">Fabriqué à Abidjan</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">Livraison en 7–14 jours</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">Tailles S à XXL</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">Retours acceptés sous 14 jours</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">Paiement sécurisé</span>
+    <span class="marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- ─── COLLECTION ─── -->
+<div id="collection">
+  <div class="section-header">
+    <div class="section-eyebrow">Collection Capsule — 2025</div>
+    <h2 class="section-title">La Collection<br><em>Pomona Studio</em></h2>
+  </div>
+
+  <div class="shop-section">
+    <div class="filter-bar">
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="filterProducts('all', this)">Toutes les robes</button>
+        <button class="filter-tab" onclick="filterProducts('longue', this)">Robes Longues</button>
+        <button class="filter-tab" onclick="filterProducts('courte', this)">Robes Courtes</button>
+      </div>
+      <div class="product-count" id="productCount">6 pièces</div>
+    </div>
+
+    <div class="product-grid" id="productGrid">
+      <!-- Products rendered by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ─── FEATURED ─── -->
+<div class="featured-section" id="notre-histoire">
+  <div class="featured-images">
+    <img class="featured-img-main"
+         src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+         id="featImg1"
+         style="background: linear-gradient(160deg, #C9502A30, #8B3318);"
+         alt="Pomona Studio" />
+  </div>
+  <div class="featured-content">
+    <div class="featured-tag">Notre Pièce Signature</div>
+    <h2 class="featured-title">La Robe<br><em>Soleil de<br>Bassam</em></h2>
+    <p class="featured-desc">
+      Cousue à la main dans notre atelier d'Abidjan, en organza de soie froide. Une robe qui entre dans une pièce avant vous — et la quitte après.
+    </p>
+    <div class="featured-price-block">
+      <div class="featured-price">149€</div>
+      <div class="featured-price-label">Robe longue<br>édition limitée</div>
+    </div>
+    <div class="featured-actions">
+      <button class="btn-primary" onclick="openCheckout([{name:'Robe Soleil de Bassam', type:'Longue', price:149, qty:1}])">
+        Commander maintenant →
+      </button>
+      <button class="btn-secondary" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">
+        Voir toute la collection
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PROMISE BAR ─── -->
+<div class="promise-bar">
+  <div class="promise-item">
+    <span class="promise-icon">✂️</span>
+    <div class="promise-title">Fait Main</div>
+    <p class="promise-desc">Chaque robe cousue à la main dans notre atelier à Abidjan</p>
+  </div>
+  <div class="promise-item">
+    <span class="promise-icon">🌍</span>
+    <div class="promise-title">Livraison Monde</div>
+    <p class="promise-desc">Côte d'Ivoire, Maroc, France, Belgique et partout</p>
+  </div>
+  <div class="promise-item">
+    <span class="promise-icon">🔒</span>
+    <div class="promise-title">Paiement Sécurisé</div>
+    <p class="promise-desc">Carte bancaire, PayPal — 100% sécurisé par Stripe</p>
+  </div>
+  <div class="promise-item">
+    <span class="promise-icon">↩️</span>
+    <div class="promise-title">Retour Facile</div>
+    <p class="promise-desc">14 jours pour changer d'avis, remboursement garanti</p>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Pomona</div>
+      <p class="footer-brand-tagline">"La femme qui porte Pomona ne cherche pas<br>à se fondre dans le paysage. Elle est le paysage."</p>
+      <div style="font-size:11px; color:#4A3F35; letter-spacing:2px;">
+        Abidjan, Côte d'Ivoire · pomona.studio
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Boutique</div>
+      <ul class="footer-links">
+        <li><a href="#">Collection complète</a></li>
+        <li><a href="#">Robes longues</a></li>
+        <li><a href="#">Robes courtes</a></li>
+        <li><a href="#">Éditions limitées</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Service Client</div>
+      <ul class="footer-links">
+        <li><a href="#">Guide des tailles</a></li>
+        <li><a href="#">Livraison & Retours</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Pomona Studio — Abidjan</span>
+    <span>Paiement sécurisé · Stripe · PayPal</span>
+  </div>
+</footer>
+
+<!-- ─── CART DRAWER ─── -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div class="cart-title">Mon Panier</div>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-subtotal">
+      <span class="cart-subtotal-label">Total</span>
+      <span class="cart-subtotal-amount" id="cartTotal">0 €</span>
+    </div>
+    <div class="cart-shipping-note">Livraison calculée à la commande · 7–14 jours</div>
+    <button class="checkout-btn" onclick="proceedToCheckout()">
+      🔒 Commander — <span id="checkoutAmount">0 €</span>
+    </button>
+    <div class="payment-icons">
+      <span class="pay-pill">VISA</span>
+      <span class="pay-pill">Mastercard</span>
+      <span class="pay-pill">PayPal</span>
+      <span class="pay-pill">Apple Pay</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CHECKOUT MODAL ─── -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="checkoutModal">
+    <div class="modal-header">
+      <div class="modal-logo">Pomona<span style="color:var(--terracotta-light);">.</span></div>
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ─── TOAST ─── -->
+<div class="toast" id="toast">✦ <span id="toastMsg">Article ajouté au panier</span></div>
+
+<script>
+// ─── DATA ───
+const products = [
+  {
+    id: 1,
+    name: "Fleur d'Harmattan",
+    type: "longue",
+    typeLabel: "Robe Longue",
+    price: 149,
+    badge: "new",
+    badgeLabel: "Nouveauté",
+    desc: "Organza de soie · Volants cascade · Évasée",
+    colors: ["#C9502A","#E8A030","#4A3F35","#89B4CC"],
+    sizes: ["S","M","L","XL","XXL"],
+    imgStyle: "background: linear-gradient(135deg, #C9502A40, #8B331820, #1C1410); display:flex;align-items:center;justify-content:center;"
+  },
+  {
+    id: 2,
+    name: "Soleil de Bassam",
+    type: "longue",
+    typeLabel: "Robe Longue",
+    price: 149,
+    badge: "limited",
+    badgeLabel: "Édition limitée",
+    desc: "Mousseline · Décolleté V · Manches larges",
+    colors: ["#E8784E","#C9502A","#FAF5EE"],
+    sizes: ["S","M","L","XL","XXL"],
+    imgStyle: "background: linear-gradient(160deg, #E8784E50, #C9502A30, #1C1410);"
+  },
+  {
+    id: 3,
+    name: "Nuit de Marrakech",
+    type: "longue",
+    typeLabel: "Robe Longue",
+    price: 149,
+    badge: null,
+    desc: "Voile de viscose · Broderies dorées · Kaftan",
+    colors: ["#1C1410","#4A3F35","#8B3318"],
+    sizes: ["S","M","L","XL","XXL"],
+    imgStyle: "background: linear-gradient(160deg, #4A3F3580, #1C1410cc);"
+  },
+  {
+    id: 4,
+    name: "Mangue Mûre",
+    type: "courte",
+    typeLabel: "Robe Courte",
+    price: 129,
+    badge: "new",
+    badgeLabel: "Nouveauté",
+    desc: "Gaze de coton · Mini volants · Bleu céruléen",
+    colors: ["#89B4CC","#C9502A","#E8A030","#FAF5EE"],
+    sizes: ["XS","S","M","L","XL","XXL"],
+    imgStyle: "background: linear-gradient(160deg, #89B4CC60, #4A3F3530, #1C1410);"
+  },
+  {
+    id: 5,
+    name: "Douceur Frangipane",
+    type: "courte",
+    typeLabel: "Robe Courte",
+    price: 129,
+    badge: null,
+    desc: "Popeline légère · Col V · Manches évasées",
+    colors: ["#FAF5EE","#D9C8A9","#E8A030"],
+    sizes: ["XS","S","M","L","XL","XXL"],
+    imgStyle: "background: linear-gradient(160deg, #F2EAD880, #D9C8A940);"
+  },
+  {
+    id: 6,
+    name: "Grenade Douce",
+    type: "courte",
+    typeLabel: "Robe Courte",
+    price: 129,
+    badge: "limited",
+    badgeLabel: "Édition limitée",
+    desc: "Crêpe de soie · Safran profond · Festonné",
+    colors: ["#E8A030","#C9502A","#8B3318"],
+    sizes: ["XS","S","M","L","XL","XXL"],
+    imgStyle: "background: linear-gradient(160deg, #E8A03060, #C9502A40, #1C1410);"
+  }
+];
+
+// ─── STATE ───
+let cart = [];
+let selectedSizes = {};
+let currentFilter = 'all';
+
+// ─── RENDER PRODUCTS ───
+function renderProducts(filter) {
+  const grid = document.getElementById('productGrid');
+  const filtered = filter === 'all' ? products : products.filter(p => p.type === filter);
+  document.getElementById('productCount').textContent = filtered.length + ' pièce' + (filtered.length > 1 ? 's' : '');
+
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card" data-id="${p.id}">
+      <div class="product-img">
+        <div style="width:100%;height:100%;${p.imgStyle}">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:rgba(255,255,255,0.25);letter-spacing:4px;padding:20px;text-align:center;">
+            ${p.name}
+          </span>
+        </div>
+        ${p.badge ? `<div class="product-badge ${p.badge}">${p.badgeLabel}</div>` : ''}
+        <div class="product-overlay">
+          <button class="quick-add-btn" onclick="quickAdd(${p.id}, event)">Ajouter au panier</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-subtitle">${p.typeLabel} · ${p.desc}</div>
+        <div class="product-price">${p.price}<span> €</span></div>
+        <div class="color-swatches">
+          ${p.colors.map((c,i) => `<div class="swatch ${i===0?'active':''}" style="background:${c}" onclick="selectColor(this, ${p.id}, '${c}')"></div>`).join('')}
+        </div>
+        <div class="size-row" id="sizes-${p.id}">
+          ${p.sizes.map(s => `<button class="size-btn" onclick="selectSize(this, ${p.id}, '${s}')">${s}</button>`).join('')}
+        </div>
+        <button class="add-to-cart" id="btn-${p.id}" onclick="addToCart(${p.id})">
+          <span>Ajouter au panier</span>
+        </button>
+        <div class="payment-methods">
+          <span class="pay-icon">VISA</span>
+          <span class="pay-icon">MC</span>
+          <span class="pay-icon">PayPal</span>
+          <span class="pay-icon" style="font-size:12px;">🍎 Pay</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterProducts(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(filter);
+}
+
+function selectColor(el, id, color) {
+  const card = el.closest('.product-card');
+  card.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function selectSize(el, id, size) {
+  const card = el.closest('.product-card');
+  card.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  selectedSizes[id] = size;
+}
+
+function quickAdd(id, e) {
+  e.stopPropagation();
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  addToCartItem(p, selectedSizes[id] || p.sizes[1]);
+}
+
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  const size = selectedSizes[id];
+  if (!size) {
+    showToast('✦ Veuillez choisir une taille');
+    // highlight sizes
+    document.querySelectorAll(`#sizes-${id} .size-btn`).forEach(b => {
+      b.style.borderColor = 'var(--terracotta)';
+      setTimeout(() => b.style.borderColor = '', 1500);
+    });
+    return;
+  }
+  addToCartItem(p, size);
+  const btn = document.getElementById(`btn-${id}`);
+  if (btn) {
+    btn.classList.add('added');
+    btn.querySelector('span').textContent = '✓ Ajouté !';
+    setTimeout(() => {
+      btn.classList.remove('added');
+      btn.querySelector('span').textContent = 'Ajouter au panier';
+    }, 2000);
+  }
+}
+
+function addToCartItem(p, size) {
+  const existing = cart.find(c => c.id === p.id && c.size === size);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ id: p.id, name: p.name, type: p.typeLabel, price: p.price, size: size || 'M', qty: 1 });
+  }
+  updateCartUI();
+  showToast(`✦ ${p.name} ajouté`);
+}
+
+// ─── CART UI ───
+function updateCartUI() {
+  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const count = cart.reduce((s, c) => s + c.qty, 0);
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartTotal').textContent = total + ' €';
+  document.getElementById('checkoutAmount').textContent = total + ' €';
+
+  const items = document.getElementById('cartItems');
+  const footer = document.getElementById('cartFooter');
+
+  if (cart.length === 0) {
+    items.innerHTML = `<div class="cart-empty">
+      <div class="cart-empty-icon">🛍</div>
+      <div class="cart-empty-text">Votre panier est vide</div>
+    </div>`;
+    footer.style.display = 'none';
+  } else {
+    footer.style.display = 'block';
+    items.innerHTML = cart.map((item, i) => `
+      <div class="cart-item">
+        <div class="cart-item-img" style="background: linear-gradient(135deg, #C9502A30, #1C141020); display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:10px;color:rgba(28,20,16,0.3);letter-spacing:2px;text-align:center;padding:4px;">${item.name.substring(0,8)}</span>
+        </div>
+        <div>
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-detail">${item.type} · Taille ${item.size}</div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(${i}, -1)">−</button>
+            <span class="qty-value">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+          <button class="cart-remove" onclick="removeItem(${i})">✕</button>
+          <div class="cart-item-price">${item.price * item.qty} €</div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function changeQty(i, delta) {
+  cart[i].qty = Math.max(1, cart[i].qty + delta);
+  updateCartUI();
+}
+
+function removeItem(i) {
+  cart.splice(i, 1);
+  updateCartUI();
+}
+
+function toggleCart() {
+  document.getElementById('cartOverlay').classList.toggle('open');
+  document.getElementById('cartDrawer').classList.toggle('open');
+}
+
+function proceedToCheckout() {
+  toggleCart();
+  openCheckout(cart);
+}
+
+// ─── CHECKOUT MODAL ───
+let paymentMethod = 'card';
+
+function openCheckout(items) {
+  const total = items.reduce((s, c) => s + c.price * c.qty, 0);
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-order-summary">
+      <div class="modal-order-title">Récapitulatif de commande</div>
+      ${items.map(i => `
+        <div class="modal-order-item">
+          <span>${i.name} ${i.size ? `· T.${i.size}` : ''} ${i.qty > 1 ? `×${i.qty}` : ''}</span>
+          <span>${i.price * i.qty} €</span>
+        </div>`).join('')}
+      <div class="modal-order-total">
+        <span>Total</span>
+        <span>${total} €</span>
+      </div>
+    </div>
+
+    <div class="form-section-label">Méthode de paiement</div>
+    <div class="payment-tabs">
+      <button class="payment-tab active" id="tabCard" onclick="switchPayment('card')">💳 Carte</button>
+      <button class="payment-tab" id="tabPaypal" onclick="switchPayment('paypal')">PayPal</button>
+      <button class="payment-tab" id="tabApple" onclick="switchPayment('apple')">🍎 Pay</button>
+    </div>
+
+    <div id="paymentForm"><!-- rendered by switchPayment --></div>
+  `;
+  switchPayment('card');
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function switchPayment(method) {
+  paymentMethod = method;
+  ['card','paypal','apple'].forEach(m => {
+    document.getElementById(`tab${m.charAt(0).toUpperCase()+m.slice(1)}`).classList.toggle('active', m === method);
+  });
+
+  const form = document.getElementById('paymentForm');
+
+  if (method === 'card') {
+    form.innerHTML = `
+      <div class="form-section-label">Coordonnées</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Prénom</label>
+          <input class="form-input" type="text" placeholder="Aya">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nom</label>
+          <input class="form-input" type="text" placeholder="Koné">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="aya@exemple.com">
+      </div>
+
+      <div class="form-section-label">Livraison</div>
+      <div class="form-group">
+        <label class="form-label">Adresse</label>
+        <input class="form-input" type="text" placeholder="123 Rue des Jardins, Cocody">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Ville</label>
+          <input class="form-input" type="text" placeholder="Abidjan">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pays</label>
+          <input class="form-input" type="text" placeholder="Côte d'Ivoire">
+        </div>
+      </div>
+
+      <div class="form-section-label">Paiement par carte</div>
+      <div class="card-field-mock">
+        <span class="card-icon">💳</span>
+        <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/(.{4})/g,'$1 ').trim()">
+      </div>
+      <div class="form-row">
+        <div class="card-field-mock">
+          <input type="text" placeholder="MM / AA" maxlength="7" oninput="formatExpiry(this)">
+        </div>
+        <div class="card-field-mock">
+          <input type="text" placeholder="CVC" maxlength="3" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        </div>
+      </div>
+      <button class="confirm-pay-btn" onclick="confirmPayment()">🔒 Confirmer le paiement</button>
+      <div class="secure-badge">🔒 Paiement sécurisé par Stripe · SSL 256-bit</div>
+    `;
+  } else if (method === 'paypal') {
+    form.innerHTML = `
+      <div style="padding:20px 0; text-align:center;">
+        <p style="font-size:13px;color:var(--cendre);margin-bottom:24px;line-height:1.7;">
+          Vous serez redirigé vers PayPal pour compléter votre paiement en toute sécurité.
+        </p>
+        <button class="paypal-btn" onclick="confirmPayment()">
+          <span style="font-style:italic;font-size:20px;">Pay</span><span style="font-size:14px;">Pal</span>
+        </button>
+        <div class="secure-badge">🔒 Protégé par PayPal Buyer Protection</div>
+      </div>
+    `;
+  } else if (method === 'apple') {
+    form.innerHTML = `
+      <div style="padding:20px 0; text-align:center;">
+        <p style="font-size:13px;color:var(--cendre);margin-bottom:24px;line-height:1.7;">
+          Utilisez Touch ID ou Face ID pour confirmer votre paiement Apple Pay.
+        </p>
+        <button onclick="confirmPayment()" style="width:100%;background:#000;color:#fff;border:none;border-radius:8px;padding:16px;font-size:16px;cursor:pointer;font-family:'-apple-system','Helvetica',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;">
+          🍎 <span>Pay</span>
+        </button>
+        <div class="secure-badge" style="margin-top:16px;">🔒 Sécurisé avec votre appareil Apple</div>
+      </div>
+    `;
+  }
+}
+
+function formatExpiry(input) {
+  let v = input.value.replace(/[^0-9]/g,'');
+  if (v.length >= 2) v = v.substring(0,2) + ' / ' + v.substring(2,4);
+  input.value = v;
+}
+
+function confirmPayment() {
+  // Show success
+  document.getElementById('modalBody').innerHTML = `
+    <div class="success-screen">
+      <span class="success-icon">✨</span>
+      <div class="success-title">Commande confirmée !</div>
+      <p class="success-desc">
+        Merci pour votre commande. Vous recevrez un email de confirmation sous peu.<br><br>
+        Votre robe Pomona est entre les mains de nos couturières à Abidjan. Elle arrivera dans 7 à 14 jours, avec amour.
+      </p>
+      <div style="margin-top:32px;padding:20px;background:var(--ivoire-warm);border:1px solid var(--sable);font-size:12px;color:var(--cendre);line-height:1.8;text-align:left;">
+        <strong style="color:var(--noir-chaud);font-weight:500;">Prochaines étapes :</strong><br>
+        ✦ Email de confirmation envoyé<br>
+        ✦ Fabrication artisanale : 3–5 jours<br>
+        ✦ Livraison : 7–14 jours ouvrés<br>
+        ✦ Numéro de suivi par SMS
+      </div>
+      <button onclick="closeModal();cart=[];updateCartUI();" style="margin-top:28px;background:var(--terracotta);color:white;border:none;padding:14px 40px;font-size:10px;letter-spacing:4px;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;">
+        Fermer
+      </button>
+    </div>
+  `;
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ─── TOAST ───
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ─── NAVBAR SCROLL ───
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ─── INIT ───
+renderProducts('all');
+updateCartUI();
+</script>
+</body>
+</html>
